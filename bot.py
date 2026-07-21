@@ -4,6 +4,11 @@ import os
 import telebot
 import requests
 import json
+
+#NEW IMPORT FOR RENDER
+import threading
+import time
+from flask import Flask
 # 1. IMPORT CUSTOM FUNCTION
 from prompts import build_coach_prompt
 
@@ -92,6 +97,36 @@ def get_coach_data(message):
         # 2. Send a polite apology to the user in Telegram
         bot.reply_to(message, "Oops! The Genshin database is currently unreachable. Please try again later.")
 
-#KEEPING BOT RUNNING
-print("Bot is running...")
-bot.infinity_polling()
+#MAKE THE BOT AWAKE
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Bot is awake!"
+def run_bot():
+    print("Bot is running...")
+    bot.infinity_polling()
+
+def keep_alive():
+    render_url = os.environ.get("RENDER_EXTERNAL_URL")
+    time.sleep(30) # Wait 30 seconds after boot
+    while True:
+        if render_url:
+            try:
+                requests.get(render_url)
+            except Exception as err:
+                print(f"Ping error: {err}")
+        time.sleep(600) # Sleep for 10 minutes
+
+if __name__ == "__main__":
+    # Start Telegram bot in background thread
+    bot_thread = threading.Thread(target=run_bot, daemon=True)
+    bot_thread.start()
+
+    # Start self-ping in background thread
+    ping_thread = threading.Thread(target=keep_alive, daemon=True)
+    ping_thread.start()
+
+    # Start Flask server on Render's assigned port
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
