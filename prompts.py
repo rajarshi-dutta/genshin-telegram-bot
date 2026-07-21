@@ -3,7 +3,8 @@ def build_coach_prompt(showcase_data, target_character):
     You are an expert Genshin Impact theorycrafter and coach.
     Analyze the player data for {target_character} from this showcase:
     {showcase_data}
-
+    if unable to detect the character id go to this link: https://act.hoyoverse.com/ys/ugc/tutorial/detail/mh4imrrhzdzi
+    then try again
     Format your ENTIRE response using Telegram HTML tags (<b>, <i>, <code>, <pre>). 
     Do NOT use Markdown, asterisks (** or *), or raw symbols.
 
