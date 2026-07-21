@@ -71,7 +71,7 @@ def get_coach_data(message):
                 for char_id , char_name in character_dict.items():
                     showcase_text = showcase_text.replace(str(char_id), char_name)
 
-                bot.reply_to(message,"Analyzint your showcase...")
+                bot.reply_to(message,"Analysing your showcase...")
 
                 #CREATING THE PROMPT FOR GEMINI
                 prompt = build_coach_prompt(showcase_text,character)
