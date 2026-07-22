@@ -51,12 +51,12 @@ def get_coach_data(message):
         character = " ".join(text_part[2:]).lower()
 
         #CHECKING IF THE UID AND CHARACTER NAME SWITCHED POSITION
-        if len(url) == 8 and str(url).isnumeric():
-            #CREATING THE URL FOR FETCHING THE USER REQUEST
-            url = f"{ENKA_URL}/{uid}"
-        else:
-            bot.reply_to(message,"Place uid in correct place")
-            return
+        # if len(url) == 8 and str(url).isnumeric():
+        #CREATING THE URL FOR FETCHING THE USER REQUEST
+        url = f"{ENKA_URL}/{uid}"
+        # else:
+            # bot.reply_to(message,"Place uid in correct place")
+            # return
 
         #SETTING HEADER FOR FETCHING REQUESTED DATA
         headeres = {"User-Agent": "MyTelegramCoachBot/1.0"}
