@@ -50,6 +50,10 @@ def get_coach_data(message):
         uid = text_part[1].lower()
         character = " ".join(text_part[2:]).lower()
 
+        #CHECKING IF THE UID AND CHARACTER NAME SWITCHED POSITION
+        if not len(uid) == 9 and str(uid).isnumeric() and character.isalpha():
+            bot.reply_to(message,"Place uid in correct place")
+            return
         #CREATING THE URL FOR FETCHING THE USER REQUEST
         url = f"{ENKA_URL}/{uid}"
 
